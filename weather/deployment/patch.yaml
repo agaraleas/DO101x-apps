@@ -1,0 +1,34 @@
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: weather
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        deployment: weather
+    spec:
+      containers:
+      - image: ' '
+        name: weather
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        env:
+        - name: OWM_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: owm-api-secret 
+              key: OWM_API_KEY
+              optional: false
+        - name: UNITS
+          valueFrom:
+            configMapKeyRef:
+              name: weather-config
+              key: UNITS
+
